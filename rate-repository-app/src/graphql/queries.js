@@ -43,6 +43,20 @@ export const GET_SINGLE_REPOSITORY = gql`
       language
       description
       fullName
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;
