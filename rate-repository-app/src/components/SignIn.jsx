@@ -39,10 +39,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SignIn = () => {
-  const navigate = useNavigate();
-  const [signIn] = useSignIn();
-
+export const SignInContainer = ({ signIn, navigate }) => {
   const handleSubmit = async (values) => {
     const { username, password } = values;
     try {
@@ -67,6 +64,13 @@ const SignIn = () => {
       {({ handleSubmit }) => <SigninForm onSubmit={handleSubmit} />}
     </Formik>
   );
+};
+
+const SignIn = () => {
+  const navigate = useNavigate();
+  const [signIn] = useSignIn();
+
+  return <SignInContainer signIn={signIn} navigate={navigate} />;
 };
 
 const SigninForm = ({ onSubmit }) => {

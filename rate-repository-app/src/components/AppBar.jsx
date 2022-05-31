@@ -31,6 +31,7 @@ const AppBar = () => {
   const apolloClient = useApolloClient();
   const { data, error } = useQuery(GET_LOGGED_USER);
   if (error) console.log(error);
+  const isLoggedIn = data?.me;
 
   const logout = async () => {
     await authStorage.removeAccessToken();
@@ -45,7 +46,7 @@ const AppBar = () => {
             Repositories
           </Text>
         </Link>
-        {data.me ? (
+        {isLoggedIn ? (
           <Link onPress={logout} to={"/signin"}>
             <Text style={styles.link} fontSize="subheading">
               Sign out

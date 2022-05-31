@@ -60,7 +60,7 @@ const RepositoryItem = ({ item }) => {
   const ratingAverage = formatStatisticValue(item.ratingAverage);
 
   return (
-    <View style={style.mainContainer}>
+    <View style={style.mainContainer} testID="repositoryItem">
       <View style={style.titleContainer}>
         <Image
           style={style.imageStyle}
