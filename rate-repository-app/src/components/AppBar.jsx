@@ -46,6 +46,11 @@ const AppBar = () => {
             Repositories
           </Text>
         </Link>
+        <Link to="/newReview">
+          <Text style={styles.link} fontSize="subheading">
+            Create a review
+          </Text>
+        </Link>
         {isLoggedIn ? (
           <Link onPress={logout} to={"/signin"}>
             <Text style={styles.link} fontSize="subheading">
