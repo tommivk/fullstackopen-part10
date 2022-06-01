@@ -51,6 +51,11 @@ const AppBar = () => {
             Create a review
           </Text>
         </Link>
+        <Link to="/myReviews">
+          <Text style={styles.link} fontSize="subheading">
+            My reviews
+          </Text>
+        </Link>
         {isLoggedIn ? (
           <Link onPress={logout} to={"/signin"}>
             <Text style={styles.link} fontSize="subheading">

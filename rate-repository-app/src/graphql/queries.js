@@ -39,10 +39,27 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_LOGGED_USER = gql`
-  query {
+  query ($withReviews: Boolean = false) {
     me {
-      id
       username
+      id
+      reviews @include(if: $withReviews) {
+        edges {
+          node {
+            rating
+            createdAt
+            text
+            repository {
+              fullName
+              id
+            }
+            user {
+              username
+            }
+            id
+          }
+        }
+      }
     }
   }
 `;
