@@ -21,6 +21,7 @@ export const RepositoryListContainer = ({
   setSortingBy,
   searchQuery,
   setSearchQuery,
+  onEndReach,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -79,6 +80,8 @@ export const RepositoryListContainer = ({
         <FlatList
           data={repositoryNodes}
           ItemSeparatorComponent={ItemSeparator}
+          onEndReached={onEndReach}
+          onEndReachedThreshold={0.5}
           renderItem={({ item }) => (
             <Pressable onPress={() => handlePress(item)}>
               <RepositoryItem item={item}></RepositoryItem>
@@ -99,11 +102,17 @@ const RepositoryList = () => {
     orderDirection: "ASC",
   });
 
-  const { repositories } = useRepositories({
+  const { repositories, fetchMore } = useRepositories({
+    first: 8,
     orderby: sort.orderBy,
     orderDirection: sort.orderDirection,
     searchKeyword: searchValue,
   });
+
+  const onEndReach = () => {
+    fetchMore();
+  };
+
   return (
     <RepositoryListContainer
       repositories={repositories}
@@ -111,6 +120,7 @@ const RepositoryList = () => {
       setSortingBy={setSort}
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
+      onEndReach={onEndReach}
     />
   );
 };

@@ -94,8 +94,8 @@ const SingleRepositoryPage = () => {
   const params = useParams();
   const repositoryId = params.repositoryId;
 
-  const { data, error, loading } = useQuery(GET_SINGLE_REPOSITORY, {
-    variables: { id: repositoryId },
+  const { data, error, loading, fetchMore } = useQuery(GET_SINGLE_REPOSITORY, {
+    variables: { id: repositoryId, first: 5, after: "" },
   });
 
   if (error) console.log(error);
@@ -106,12 +106,22 @@ const SingleRepositoryPage = () => {
   const reviews = repository?.reviews;
   const reviewData = reviews ? reviews.edges.map((edge) => edge.node) : [];
 
+  const onReachEnd = () => {
+    const canFetchMore = !loading && reviews?.pageInfo?.hasNextPage;
+    const after = reviews?.pageInfo?.endCursor;
+    if (canFetchMore) {
+      fetchMore({ variables: { id: repositoryId, first: 5, after } });
+    }
+  };
+
   return (
     <FlatList
       data={reviewData}
       renderItem={({ item }) => <ReviewItem item={item} />}
       keyExtractor={({ id }) => id}
       ListHeaderComponent={<RepositoryInfo repository={repository} />}
+      onEndReached={onReachEnd}
+      onEndReachedThreshold={0.5}
     ></FlatList>
   );
 };
